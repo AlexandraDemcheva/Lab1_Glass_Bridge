@@ -1,0 +1,14 @@
+<launch>
+    <arg name="topic" default="user_steps"/>
+    <arg name="server" default="gb_service"/>
+
+    <node name="gb_service_server" pkg="gb_client_server" type="server" output="screen">
+    	<param name = "topic_name" 	type = "str"	value = "$(arg topic)" />
+    	<param name = "service_name" 	type = "str"	value = "$(arg server)" />
+    </node>	
+
+    <node name="gb_publisher" pkg="gb_client_server" type="client" output="screen">
+    	<param name = "topic_name" 	type = "str"	value = "$(arg topic)"/>
+    	<param name = "service_name" 	type = "str"	value = "$(arg server)"/>
+    </node>
+</launch>
