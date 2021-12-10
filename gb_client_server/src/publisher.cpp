@@ -26,17 +26,19 @@ int main(int argc, char **argv)
         //Responsing
         if (client.call(srv))
         {
+            if (srv.response.response == "end game")
+            {
+                ROS_INFO("congratulations, you won");
+                ros::shutdown();
+            }
+
             ROS_INFO_STREAM(" " << srv.response.response);
 
             if (srv.response.response == "dead")
             {
                 ros::shutdown();
             }
-            if (srv.response.response == "end game")
-            {
-                ROS_INFO("congratulations, you won");
-                ros::shutdown();
-            }
+
         }
         else
         {

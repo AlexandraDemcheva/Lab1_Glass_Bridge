@@ -10,6 +10,9 @@ project(gb_client_server)
 find_package(catkin REQUIRED COMPONENTS
   gb_service
   roscpp
+  message_generation
+  message_runtime
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions

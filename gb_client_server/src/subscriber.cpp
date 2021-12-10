@@ -3,8 +3,8 @@
 #include "std_msgs/UInt8.h"
 #include "gb_service/GlassBridge.h" 
 #include <iostream>
-
-
+#include <cstdlib>
+#include <ctime>
 
 const char L_CODE = 108; 
 const char R_CODE = 114; 
@@ -58,12 +58,14 @@ void msgHandler(std_msgs::UInt8 step)
     {
         g_userSteps.push_back((char)step.data);
         ROS_INFO_STREAM("your previous steps: " << g_userSteps);
+
+        if (g_userSteps.length() == 18)
+        {
+            ROS_INFO("congratulations, you won");
+            g_shutdownFlag = true;
+        }
     }
-    if (g_userSteps.length() == 18)
-    {
-        ROS_INFO("congratulations, you won");
-        g_shutdownFlag = true;
-    }
+
     return;
 }
 
@@ -83,6 +85,8 @@ int main(int argc, char **argv)
     ros::Subscriber sub = n.subscribe(topic_name, 18, msgHandler);
 
     ROS_INFO("Ready to start");
+
+    std::srand(std::time(0));
 
     for (int i = 0; i < 18; i++)
     {
